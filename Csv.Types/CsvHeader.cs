@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Csv.Types
 {
-    public class CsvHeader
+    public class CsvHeaderItem
     {
         public Type DataType { get; set; }
         public string DefaultValue { get; set; }
@@ -17,7 +17,7 @@ namespace Csv.Types
         public int MinSize { get; set; } = 0;
         public int MaxSize { get; set; } = 0;
 
-        public CsvHeader()
+        public CsvHeaderItem()
         {
             this.FieldName = "";
             this.DefaultValue = "";
@@ -25,7 +25,7 @@ namespace Csv.Types
             this.ForcedDefault = false;
             this.AllowNull = true;
         }
-        public CsvHeader(string fieldName)
+        public CsvHeaderItem(string fieldName)
         {
             this.FieldName = fieldName;
             this.DefaultValue = "";
@@ -33,7 +33,7 @@ namespace Csv.Types
             this.ForcedDefault = false;
             this.AllowNull = true;
         }
-        public CsvHeader(string fieldName, Type dataType)
+        public CsvHeaderItem(string fieldName, Type dataType)
         {
             this.FieldName = fieldName;
             this.DefaultValue = "";
@@ -41,7 +41,7 @@ namespace Csv.Types
             this.ForcedDefault = false;
             this.AllowNull = true;
         }
-        public CsvHeader(string fieldName, Type dataType, int orderNo)
+        public CsvHeaderItem(string fieldName, Type dataType, int orderNo)
         {
             this.FieldName = fieldName;
             this.DefaultValue = "";
@@ -50,7 +50,7 @@ namespace Csv.Types
             this.AllowNull = true;
             this.OrderNo = orderNo;
         }
-        public CsvHeader(string fieldName, Type dataType, int orderNo, int maxSize)
+        public CsvHeaderItem(string fieldName, Type dataType, int orderNo, int maxSize)
         {
             this.FieldName = fieldName;
             this.DefaultValue = "";
@@ -60,7 +60,7 @@ namespace Csv.Types
             this.OrderNo = orderNo;
             this.MaxSize = maxSize;
         }
-        public CsvHeader(string fieldName, Type dataType, int orderNo, int maxSize, int minSize)
+        public CsvHeaderItem(string fieldName, Type dataType, int orderNo, int maxSize, int minSize)
         {
             this.FieldName = fieldName;
             this.DefaultValue = "";
@@ -72,4 +72,11 @@ namespace Csv.Types
             this.MinSize = MinSize;
         }
     }
+
+    public class CsvHeader
+    {
+        public List<CsvHeader> Header { get; set; }
+        public string HeaderLine { get; set; }
+    }
+        
 }
