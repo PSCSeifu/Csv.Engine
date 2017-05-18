@@ -36,14 +36,34 @@ namespace Csv.Parse
             using (IEnumerator<string> enumerator = source.GetEnumerator())
             {
                 bool moreItems = enumerator.MoveNext();
+                //Get the header line here
+                if (moreItems)
+                {
+                    pscCsv.Headers.RawHeaderLine = enumerator.Current;
+                }
+
+                int count = 0;
                 while (moreItems)
                 {
+                    count++;
                     string stringLine = enumerator.Current;
                     //Do stuff
-                    //pscCsv.Line
+                    pscCsv.Data.Lines.Add(new CsvLineItem(stringLine,count,""));
                     moreItems = enumerator.MoveNext();
                 }
+                //Take last line and add to csv footer...
             }
+
+            return pscCsv;
+        }
+
+        public PscCsv ProcessCsv<T>(PscCsv pscCsv /*Ilogger ?*/)
+        {
+            //Set CSvHeader items from raw header line - Add errors
+
+            //Set footer items from last line items, remove last line - add errors
+
+            //Set line items to the T type container  - add errors
 
             return pscCsv;
         }

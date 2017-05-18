@@ -76,7 +76,7 @@ namespace Csv.Types
     public class CsvHeader
     {
         public List<CsvHeader> Header { get; set; }
-        public string HeaderLine { get; set; }
+        public string RawHeaderLine { get; set; }
     }
         
 }

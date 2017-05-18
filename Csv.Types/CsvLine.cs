@@ -8,13 +8,20 @@ namespace Csv.Types
 {
     public class CsvLineItem
     {
-        public List<string> Line { get; set; }
+        public string Line { get; set; }
         public int RowNo { get; set; }
         public string RowTerminator { get; set; }
+
+        public CsvLineItem(string line, int rowno, string rowTerminator)
+        {
+            this.Line = line;
+            this.RowNo = rowno;
+            this.RowTerminator = rowTerminator;
+        }
     }
 
-    public class CsvLine
+    public class CsvLines
     {
-        public List<CsvLineItem> Line { get; set; }
+        public List<CsvLineItem> Lines { get; set; }
     }
 }
