@@ -22,13 +22,30 @@ namespace Csv.Parse
             this._csvLineSplitter = csvLineSplitter;
         }
 
-        //public PscCsv ParseCsv<T>(IEnumerable<string> source)
-        //{
-        //    PscCsv pscCsv = new PscCsv();
-        //    if (source == null || source.Count() <= 0)
-        //    {
-        //        pscCsv.Errors.Add(new CsvError());
-        //    }
-        //}
+        public PscCsv ParseCsv<T>(IEnumerable<string> source)
+        {
+            PscCsv pscCsv = new PscCsv();
+            if (source == null || source.Count() <= 0)
+            {
+                //Anti-pattern, new key work, refactor to an interface 
+                var error = new CsvErrorItem();
+                error.Message = "Input string collection is null or empty";
+                pscCsv.Errors.Error.Add(error);
+            }
+
+            using (IEnumerator<string> enumerator = source.GetEnumerator())
+            {
+                bool moreItems = enumerator.MoveNext();
+                while (moreItems)
+                {
+                    string stringLine = enumerator.Current;
+                    //Do stuff
+                    //pscCsv.Line
+                    moreItems = enumerator.MoveNext();
+                }
+            }
+
+            return pscCsv;
+        }
     }
 }

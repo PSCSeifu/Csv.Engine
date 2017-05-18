@@ -16,7 +16,7 @@ namespace Csv.Types
 
     public class CsvError
     {
-        public List<CsvError> Error { get; set; }
+        public List<CsvErrorItem> Error { get; set; }
     }
 
         public enum CsvErrorType
