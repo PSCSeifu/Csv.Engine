@@ -17,5 +17,8 @@ namespace Csv.Types
         public char Quote { get; set; }
         public bool IsQuoted { get; set; }
         public bool HasSeparator { get; set; }
+
+        public bool HasHeader { get; set; }
+        public bool HasFooter { get; set; }
     }
 }
