@@ -54,7 +54,7 @@ namespace Csv.Test
         }
 
         [Fact]
-        public void c_CsvLineBelow3Chars_ReturnsEmptyCollection()
+        public void CsvSplit_CsvLineBelow3Chars_ReturnsEmptyCollection()
         {
             //Arrange
             string source = @"ab";
@@ -64,8 +64,50 @@ namespace Csv.Test
 
             //Assert
             result.Should().BeEquivalentTo(expectedList);
-        }                
-        
+        }
+
+        [Fact]
+        public void CsvSplit_SepratorInsideQuotes_ReturnsSepratorAsPartOfNormalString()
+        {
+            //Arrange
+            string source = "*data1*,*data2,data2*,*data3*";
+            List<string> expectedList = new List<string>() {"data1","data2,data2","data3" };
+
+            //Act
+            var result = _csvLineSplitter.CsvSplit(source, ',', '*');
+
+            //Assert
+            result.Should().BeEquivalentTo(expectedList);
+        }
+
+        [Fact]
+        public void CsvSplit_OneDataItemOnly_ReturnsOneCollectionItem()
+        {
+            //Arrange
+            string source = "*data1*";
+            List<string> expectedList = new List<string>() { "data1"};
+
+            //Act
+            var result = _csvLineSplitter.CsvSplit(source, ';', '*');
+
+            //Assert
+            result.Should().BeEquivalentTo(expectedList);
+        }
+
+        [Fact]
+        public void CsvSplit_EmptyDataItemsCsvLine_ReturnsEmptyDataItems()
+        {
+            //Arrange
+            string source = "**,**,**";
+            List<string> expectedList = new List<string>() { "", "", "" };
+
+            //Act
+            //Act
+            var result = _csvLineSplitter.CsvSplit(source, ',', '*');
+
+            //Assert
+            result.Should().BeEquivalentTo(expectedList);            
+        }
         #endregion
 
         #region " Separator Tests "
@@ -198,27 +240,27 @@ namespace Csv.Test
 
         #region " Trim Source line Tests "
         [Fact]
-        public void CsvSplit_TrimSourceSetToFalse_DoesNotTrimSourceCsvLine()
+        public void CsvSplit_WhiteSpaceIAtEndofCsvLine_TrimsCsvLine()
         {
             //Arrange
-            string source = "    AccountOfficeReference,Address1,Address2, Address3   ";
+            string source = "AccountOfficeReference,Address1,Address2,Address3   ";
             List<string> expectedList =
-                new List<string>() { "    AccountOfficeReference", "Address1", "Address2", " Address3   " };
+                new List<string>() { "AccountOfficeReference", "Address1", "Address2", "Address3" };
 
             //Act
-            var result = _csvLineSplitter.CsvSplit(source, true, false, ',', '?');
+            var result = _csvLineSplitter.CsvSplit(source);
 
             //Assert
             result.Should().BeEquivalentTo(expectedList);
         }
 
         [Fact]
-        public void CsvSplit_TrimSourceSetToTrue_TrimsSourceCsvLine()
+        public void CsvSplit_WhiteSpaceIAtStartofCsvLine_TrimsCsvLine()
         {
-            //Arrange
-            string source = "    AccountOfficeReference,Address1 ,Address2,Address3  ";
+            //Arrange             
+            string source = "     AccountOfficeReference,Address1,Address2,Address3";
             List<string> expectedList =
-                new List<string>() { "AccountOfficeReference ", "Address1", "Address2", "Address3" };
+                new List<string>() { "AccountOfficeReference", "Address1", "Address2", "Address3" };
 
             //Act
             var result = _csvLineSplitter.CsvSplit(source);
@@ -230,20 +272,33 @@ namespace Csv.Test
 
         #region " Trims Collection Items Test "
         [Fact]
-        public void CsvSplit_TrimParameterNotGiven_TrimsItemsByDefault()
+        public void CsvSplit_TrimParameterNotGivenNotQuotedCsvLine_TrimsItemsByDefault()
+        {
+            //Arrange           
+            string source = "    AccountOfficeReference, Address1 ,  Address2  ,   Address3";
+            List<string> expectedList = new List<string>() { "AccountOfficeReference", "Address1", "Address2", "Address3" };
+            
+            //Act
+            var result = _csvLineSplitter.CsvSplit(source,',',char.MinValue);
+
+            //Assert
+            result.Should().BeEquivalentTo(expectedList);
+        }
+
+        [Fact]
+        public void CsvSplit_TrimParameterNotGivenQuotedCsvLine_TrimsItemsByDefault()
         {
             //Arrange
             string source = "\"AccountOfficeReference  \",\"  Address1\",\"Address2        \",\"Address3\",\"      Address4\",\"Address5\"";
             List<string> expectedList = new List<string>() { "AccountOfficeReference", "Address1", "Address2", "Address3", "Address4", "Address5" };
-
+            
             //Act
             var result = _csvLineSplitter.CsvSplit(source);
 
             //Assert
             result.Should().BeEquivalentTo(expectedList);
         }
-
-       
+                
         #endregion
     }
 }

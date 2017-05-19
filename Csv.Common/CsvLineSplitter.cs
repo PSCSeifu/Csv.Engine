@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Csv.Common
 {
-    public  class CsvLineSplitter : ICsvLineSplitter
+    public class CsvLineSplitter : ICsvLineSplitter
     {
         /// <summary>
         /// Returns list of string. Splits the source string using provided seprator. Defaults to empty string list.
@@ -17,8 +17,8 @@ namespace Csv.Common
         /// <param name="trimSource"></param>
         /// <param name="separator"></param>
         /// <param name="quote"></param>
-        /// <returns>IEnumerable<string></returns>
-        public IEnumerable<string> CsvSplit(string source, bool stripQuotes, bool trimSource, char separator, char quote)
+        /// <returns>List<string></returns>
+        public List<string> CsvSplit(string source, bool stripQuotes, bool trimItems, char separator, char quote)
         {
             List<string> stringList = new List<string>();
             string str1 = "\"\"";
@@ -36,34 +36,36 @@ namespace Csv.Common
             else
             {
                 str1 = quote.ToString() + quote.ToString();
-            }            
+            }
             if (string.IsNullOrEmpty(source))
             {
                 return stringList;
             }
 
-            source.Trim();
-
             if (source.Length < 3)
             {
                 return stringList;
             }
+            string input = source.Trim();
 
 
-            for (int length = 0; length < source.Length; ++length)
+            for (int length = 0; length < input.Length; ++length)
             {
-                if ((int)source[length] == (int)separator && num == -1)
+                if ((int)input[length] == (int)separator && num == -1)
                 {
                     if (startIndex == -1)
                     {
-                        stringList.Add(source.Substring(0, length));
+                        stringList.Add(  (trimItems) ? 
+                                input.Substring(0, length).Trim() :
+                                input.Substring(0, length)
+                            );
                         startIndex = length + 1;
                     }
                     else
                     {
                         if (stripQuotes)
                         {
-                            string str2 = source.Substring(startIndex, length - startIndex);
+                            string str2 = input.Substring(startIndex, length - startIndex);
                             if (str2 == str1)
                             {
                                 stringList.Add("");
@@ -77,24 +79,19 @@ namespace Csv.Common
                                     if ((int)str3[index] == (int)quote)
                                         str2 = str2.Substring(1, str2.Length - 2);
                                 }
-                                if (trimSource)
+                                if (trimItems)
                                     str2 = str2.Trim();
                                 stringList.Add(str2);
                             }
                         }
-                        else if (trimSource)
-                        {
-                           stringList.Add(source.Substring(startIndex, length - startIndex).Trim());
-                        }
+                        else if (trimItems)
+                            stringList.Add(input.Substring(startIndex, length - startIndex).Trim());
                         else
-                        {
-                            stringList.Add(source.Substring(startIndex, length - startIndex));
-                        }
-
+                            stringList.Add(input.Substring(startIndex, length - startIndex));
                         startIndex = length + 1;
                     }
                 }
-                if ((int)source[length] == (int)quote)
+                if ((int)input[length] == (int)quote)
                 {
                     if (num == -1)
                     {
@@ -109,7 +106,7 @@ namespace Csv.Common
 
             if (startIndex >= 0)
             {
-                string str4 = source.Substring(startIndex, source.Length - startIndex);
+                string str4 = input.Substring(startIndex, input.Length - startIndex);
                 if (stripQuotes)
                 {
                     if (str4 == str1)
@@ -125,21 +122,17 @@ namespace Csv.Common
                             if ((int)str2[index] == (int)quote)
                                 str4 = str4.Substring(1, str4.Length - 2);
                         }
-                        if (trimSource)
-                        {
-                            stringList.Add(str4.Trim());                            
-                        }
-                        else
-                        {
-                            stringList.Add(str4);
-                        }
+                        if (trimItems)
+                            str4 = str4.Trim();
+                        stringList.Add(str4);
                     }
                 }
-                else if (trimSource)
+                else if (trimItems)
                 { stringList.Add(str4.Trim()); }
                 else
                 { stringList.Add(str4); }
             }
+
             return stringList;
         }
         
@@ -151,8 +144,8 @@ namespace Csv.Common
         /// <param name="separator"></param>
         /// <param name="quote"></param>
         /// <returns></returns>
-        public IEnumerable<string> CsvSplit(string source, bool stripQuotes,char separator, char quote)
-            => CsvSplit(source, stripQuotes, true, separator, quote);
+        public List<string> CsvSplit(string source, bool stripQuotes, char separator, char quote)
+        => CsvSplit(source, stripQuotes, true, separator, quote);
 
         /// <summary>
         /// By default strips the quotes and trims the source string line
@@ -160,9 +153,9 @@ namespace Csv.Common
         /// <param name="source"></param>
         /// <param name="separator"></param>
         /// <param name="quote"></param>
-        /// <returns>IEnumerable<string></returns>
-        public IEnumerable<string> CsvSplit(string source, char separator, char quote)
-            =>  CsvSplit(source, true, true, separator, quote);
+        /// <returns>List<string></returns>
+        public List<string> CsvSplit(string source, char separator, char quote)
+            => CsvSplit(source, true, true, separator, quote);
 
         /// <summary>
         /// By default strips the quotes and trims the source string line. Uses the double quote character i.e. "
@@ -170,15 +163,15 @@ namespace Csv.Common
         /// <param name="source"></param>
         /// <param name="separator"></param>
         /// <returns></returns>
-        public IEnumerable<string> CsvSplit(string source, char separator)
-            => CsvSplit(source, true, true, separator,'"');
+        public List<string> CsvSplit(string source, char separator)
+            => CsvSplit(source, true, true, separator, '"');
 
         /// <summary>
         /// Use double quotes (") and comma (,) as default. Strips the quotes and trims the source string line
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public IEnumerable<string> CsvSplit(string source)
+        public List<string> CsvSplit(string source)
            => CsvSplit(source, true, true, ',', '"');
 
     }
