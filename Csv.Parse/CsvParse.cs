@@ -57,35 +57,41 @@ namespace Csv.Parse
             return pscCsv;
         }
 
-        public PscCsv ProcessCsv<T>(PscCsv pscCsv /*Ilogger ?*/)
+        public PscCsv ProcessCsv<T>(PscCsv pscCsv,ICsvLineSplitter csvlineSplitter /*Ilogger ?*/)
         {
-            //Set CSvHeader items from raw header line - Add errors
-            if (pscCsv.HasHeader) {
-                //run method/s to calcualte header properties from T
-            } else { /*TODO: ? */}
-
-            //Set footer items from last line items, remove last line - add errors
-            if (pscCsv.HasFooter)
+            if (pscCsv.Data != null && pscCsv.Data.Lines != null)
             {
-                /* Remove last line*/
-                if (pscCsv.Data != null && pscCsv.Data.Lines != null)
+                //Set CSvHeader items from the first line - Add errors
+                if (pscCsv.HasHeader)
                 {
-                    if(pscCsv.Data.Lines.Last().Line.ToString()
-                        == pscCsv.Data.Lines.First().Line.ToString())
+                    pscCsv.Headers.RawHeaderLine = pscCsv.Data.Lines.First().Line ?? "";
+                    //run method/s to calcualte header properties from T
+                }
+                else { /*TODO: ? */}
+
+                //Set footer items from last line items, remove last line - add errors
+                if (pscCsv.HasFooter)
+                {
+                    /* Remove last line*/
+
+                    if (pscCsv.Data.Lines.Last().Line
+                        == pscCsv.Data.Lines.First().Line)
                     {
                         //TODO : can this be set to represent no data?
                     }
                     else
                     {
-                        //Do footer get and set
+                        //Anti-pattern warning - footer needs an interface, be extensible for future requirements
+                        var lastLine = pscCsv.Data.Lines.Last().Line;                                           
+                        var footerElements = csvlineSplitter.CsvSplit(
+                            lastLine, pscCsv.IsQuoted, true, pscCsv.Separator, pscCsv.Quote);
+                        //Run footer get and set   
                     }
-                }
-                else
-                {
-                    //Check pscCsv.Errors
-                }
-
-                
+                }           
+            }
+            else
+            {
+                //Check pscCsv.Errors
             }
 
             //Set line items to the T type container  - add errors

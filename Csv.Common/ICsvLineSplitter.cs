@@ -8,6 +8,10 @@ namespace Csv.Common
 {
     public interface ICsvLineSplitter
     {
-       IEnumerable<string> CsvSplit(string source, bool stripQuotes, bool trim, char separator, char quote);
+        IEnumerable<string> CsvSplit(string source, bool stripQuotes, bool trimSource, char separator, char quote);
+        IEnumerable<string> CsvSplit(string source, bool stripQuotes, char separator, char quote);
+        IEnumerable<string> CsvSplit(string source, char separator, char quote);
+        IEnumerable<string> CsvSplit(string source, char separator);
+        IEnumerable<string> CsvSplit(string source);
     }
 }

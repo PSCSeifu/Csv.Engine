@@ -11,7 +11,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
     {
         #region " CSV Split"
                 
-        [Fact]
+       //[Fact]
         public void CsvSplit_CorrectCsvString_IsSplitIntoStringList()
         {
             //Arrange
@@ -24,7 +24,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
 
         }
 
-        [Fact]
+       //[Fact]
         public void CsvSplit_InCorrectlyFormattedCsvString_ReturnsEmptyStringList()
         {
             //Arrange
@@ -37,7 +37,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
 
         }
 
-        [Fact]
+       //[Fact]
         public void CsvSplit_EmptyString__ReturnsEmptyStringList()
         {
             //Arrange
@@ -50,7 +50,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
 
         }
 
-        [Fact]
+       //[Fact]
         public void CsvSplit_NoSeparatorGiven_UsesCommaAsSeprator()
         {
             //Arrange
@@ -63,7 +63,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
 
         }
 
-        [Fact]
+       //[Fact]
         public void CsvSplit_NoQuoteGiven_UsesDoubleQuoteAsQuote()
         {
             //Arrange
@@ -80,7 +80,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
 
         #region " TransformStringToType "
 
-        [Fact]
+       //[Fact]
         public void TransformStringToType_NullInputString_ReturnsNullString()
         {
             //Arrange
@@ -93,7 +93,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
 
         }
 
-        [Fact]
+       //[Fact]
         public void TransformStringToType_NullableIntegerNullString_ReturnsNullInteger()
         {
             //Arrange
@@ -110,7 +110,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
 
         #region "  TransformListStringToObject "
 
-        [Fact]
+       //[Fact]
         public void TransformListStringToObject_CorrectFieldsAndData_ConstructsCorrectObject()
         {
             //Arrange
@@ -123,7 +123,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
 
         }
 
-        [Fact]
+       //[Fact]
         public void TransformListStringToObject_NullFields_ReturnsNullObject()
         {
             //Arrange
@@ -136,7 +136,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
 
         }
 
-        [Fact]
+       //[Fact]
         public void TransformListStringToObject_DataListHasZeroElements_ReturnsNullObject()
         {
             //Arrange
@@ -149,7 +149,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
 
         }
 
-        [Fact]
+       //[Fact]
         public void TransformListStringToObject_FieldAndDataCountMismatch_ReturnsNullObject()
         {
             //Arrange
@@ -163,7 +163,7 @@ namespace Csv.Test.UnitTests.Csv.Parse
         }
 
 
-        [Fact]
+       //[Fact]
         public void TransformListStringToObject_ObjectAndFieldsMismatch_ReturnsNullForMissingProperty()
         {
             //Arrange
