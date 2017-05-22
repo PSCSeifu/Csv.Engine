@@ -65,9 +65,9 @@ namespace Csv.Common
             {
                 if (csvdata.Count() > 0)
                 {
-                    foreach (var csvline in csvdata)
+                    foreach (var CsvLines in csvdata)
                     {
-                        sw.WriteLine(csvline);
+                        sw.WriteLine(CsvLines);
                     }
                 }
             }

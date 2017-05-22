@@ -20,7 +20,7 @@ namespace Csv.Types
         //public CsvFooter Read<CsvFooter>(string line, char separator, char quote)
         //{
         //    CsvFooter footer = new 
-        //    var eofString =  CsvLineSplit.CsvSplit(line, separator, quote);
+        //    var eofString =  CsvLinesplit.CsvSplit(line, separator, quote);
 
         //}
 

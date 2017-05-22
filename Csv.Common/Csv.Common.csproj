@@ -40,15 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CsvFileProvider.cs" />
-    <Compile Include="CsvLineSplitter.cs" />
-    <Compile Include="ICsvComponent.cs" />
-    <Compile Include="ICsvFileProvider.cs" />
-    <Compile Include="ICsvLineMaker.cs" />
-    <Compile Include="ICsvLineSplitter.cs" />
-    <Compile Include="IObjectToStringCollectionMapper.cs" />
-    <Compile Include="IStringCollectionToObjectMapper.cs" />
+    <Compile Include="CsvComponent\CsvCompositeComponent.cs" />
+    <Compile Include="CsvFileProvider\CsvFileProvider.cs" />
+    <Compile Include="CsvLineMaker\CsvLineMaker.cs" />
+    <Compile Include="CsvLineSplitter\CsvLineSplitter.cs" />
+    <Compile Include="CsvComponent\ICsvComponent.cs" />
+    <Compile Include="CsvFileProvider\ICsvFileProvider.cs" />
+    <Compile Include="CsvLineMaker\ICsvLineMaker.cs" />
+    <Compile Include="CsvLineSplitter\ICsvLineSplitter.cs" />
+    <Compile Include="ObjectToStringCollectionMapper\IObjectToStringCollectionMapper.cs" />
+    <Compile Include="ObjectToStringCollectionMapper\ObjectToStringCollectionMapper.cs" />
+    <Compile Include="StringCollectionToObjectMapper\IStringCollectionToObjectMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringCollectionToObjectMapper\StringCollectionToObjectMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Csv.Lib\Csv.Lib.csproj">

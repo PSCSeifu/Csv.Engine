@@ -71,7 +71,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CsvLineSplitterTests.cs" />
+    <Compile Include="UnitTests\Csv.Common\CsvLineMakerTests.cs" />
+    <Compile Include="UnitTests\Csv.Common\CsvLineSplitterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTests\Csv.Parse\CsvParseTests.cs" />
   </ItemGroup>

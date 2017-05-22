@@ -45,6 +45,7 @@
     <Compile Include="CsvFooter.cs" />
     <Compile Include="CsvHeader.cs" />
     <Compile Include="CsvLine.cs" />
+    <Compile Include="CsvObjectMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PscCsv.cs" />
   </ItemGroup>

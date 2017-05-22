@@ -17,66 +17,66 @@ namespace Csv.Types
         public int MinSize { get; set; } = 0;
         public int MaxSize { get; set; } = 0;
 
-        public CsvHeaderItem()
-        {
-            this.FieldName = "";
-            this.DefaultValue = "";
-            this.DataType = typeof(string);
-            this.ForcedDefault = false;
-            this.AllowNull = true;
-        }
-        public CsvHeaderItem(string fieldName)
-        {
-            this.FieldName = fieldName;
-            this.DefaultValue = "";
-            this.DataType = typeof(string);
-            this.ForcedDefault = false;
-            this.AllowNull = true;
-        }
-        public CsvHeaderItem(string fieldName, Type dataType)
-        {
-            this.FieldName = fieldName;
-            this.DefaultValue = "";
-            this.DataType = dataType;
-            this.ForcedDefault = false;
-            this.AllowNull = true;
-        }
-        public CsvHeaderItem(string fieldName, Type dataType, int orderNo)
-        {
-            this.FieldName = fieldName;
-            this.DefaultValue = "";
-            this.DataType = dataType;
-            this.ForcedDefault = false;
-            this.AllowNull = true;
-            this.OrderNo = orderNo;
-        }
-        public CsvHeaderItem(string fieldName, Type dataType, int orderNo, int maxSize)
-        {
-            this.FieldName = fieldName;
-            this.DefaultValue = "";
-            this.DataType = dataType;
-            this.ForcedDefault = false;
-            this.AllowNull = true;
-            this.OrderNo = orderNo;
-            this.MaxSize = maxSize;
-        }
-        public CsvHeaderItem(string fieldName, Type dataType, int orderNo, int maxSize, int minSize)
-        {
-            this.FieldName = fieldName;
-            this.DefaultValue = "";
-            this.DataType = dataType;
-            this.ForcedDefault = false;
-            this.AllowNull = true;
-            this.OrderNo = orderNo;
-            this.MaxSize = maxSize;
-            this.MinSize = MinSize;
-        }
+        //public CsvHeaderItem()
+        //{
+        //    this.FieldName = "";
+        //    this.DefaultValue = "";
+        //    this.DataType = typeof(string);
+        //    this.ForcedDefault = false;
+        //    this.AllowNull = true;
+        //}
+        //public CsvHeaderItem(string fieldName)
+        //{
+        //    this.FieldName = fieldName;
+        //    this.DefaultValue = "";
+        //    this.DataType = typeof(string);
+        //    this.ForcedDefault = false;
+        //    this.AllowNull = true;
+        //}
+        //public CsvHeaderItem(string fieldName, Type dataType)
+        //{
+        //    this.FieldName = fieldName;
+        //    this.DefaultValue = "";
+        //    this.DataType = dataType;
+        //    this.ForcedDefault = false;
+        //    this.AllowNull = true;
+        //}
+        //public CsvHeaderItem(string fieldName, Type dataType, int orderNo)
+        //{
+        //    this.FieldName = fieldName;
+        //    this.DefaultValue = "";
+        //    this.DataType = dataType;
+        //    this.ForcedDefault = false;
+        //    this.AllowNull = true;
+        //    this.OrderNo = orderNo;
+        //}
+        //public CsvHeaderItem(string fieldName, Type dataType, int orderNo, int maxSize)
+        //{
+        //    this.FieldName = fieldName;
+        //    this.DefaultValue = "";
+        //    this.DataType = dataType;
+        //    this.ForcedDefault = false;
+        //    this.AllowNull = true;
+        //    this.OrderNo = orderNo;
+        //    this.MaxSize = maxSize;
+        //}
+        //public CsvHeaderItem(string fieldName, Type dataType, int orderNo, int maxSize, int minSize)
+        //{
+        //    this.FieldName = fieldName;
+        //    this.DefaultValue = "";
+        //    this.DataType = dataType;
+        //    this.ForcedDefault = false;
+        //    this.AllowNull = true;
+        //    this.OrderNo = orderNo;
+        //    this.MaxSize = maxSize;
+        //    this.MinSize = MinSize;
+        //}
     }
 
-    public class CsvHeader
+    public class CsvHeader 
     {
-        public List<CsvHeader> Header { get; set; }
-        public string RawHeaderLine { get; set; }
+        public List<CsvHeaderItem> Headers { get; set; }
+        public string CsvHeaderLine { get; set; }        
     }
         
 }

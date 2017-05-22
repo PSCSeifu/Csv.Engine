@@ -40,7 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CsvParse.cs" />
+    <Compile Include="CsvDecompose\CsvDecompose.cs" />
+    <Compile Include="CsvDecompose\ICsvDecompose.cs" />
+    <Compile Include="CsvParse\CsvParse.cs" />
+    <Compile Include="CsvParse\ICsvParse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -53,5 +56,6 @@
       <Name>Csv.Types</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

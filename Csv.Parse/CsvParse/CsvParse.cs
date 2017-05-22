@@ -6,23 +6,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Csv.Parse
+namespace Csv.Parse.CsvParse
 {
-    public interface ICsvParse
+       public class CsvParse : ICsvParse
     {
-        PscCsv ParseCsv<T>(IEnumerable<string> source);
-    }
+        private ICsvLineSplitter _CsvLineplitter;
 
-    public class CsvParse //: ICsvParse
-    {
-        private ICsvLineSplitter _csvLineSplitter;
-
-        public  CsvParse(ICsvLineSplitter csvLineSplitter)
+        public  CsvParse(ICsvLineSplitter CsvLineplitter)
         {
-            this._csvLineSplitter = csvLineSplitter;
+            this._CsvLineplitter = CsvLineplitter;
         }
 
         public PscCsv ParseCsv<T>(IEnumerable<string> source)
+        {           
+            return ProcessCsv<T>(ReadLines<T>(source), _CsvLineplitter);
+        }
+
+        private PscCsv ReadLines<T>(IEnumerable<string> source)
         {
             PscCsv pscCsv = new PscCsv();
             if (source == null || source.Count() <= 0)
@@ -39,7 +39,7 @@ namespace Csv.Parse
                 //Get the header line here
                 if (moreItems)
                 {
-                    pscCsv.Headers.RawHeaderLine = enumerator.Current;
+                    pscCsv.Headers.CsvHeaderLine = enumerator.Current;
                 }
 
                 int count = 0;
@@ -57,14 +57,14 @@ namespace Csv.Parse
             return pscCsv;
         }
 
-        public PscCsv ProcessCsv<T>(PscCsv pscCsv,ICsvLineSplitter csvlineSplitter /*Ilogger ?*/)
+        private PscCsv ProcessCsv<T>(PscCsv pscCsv, ICsvLineSplitter CsvLineplitter /*Ilogger ?*/)
         {
             if (pscCsv.Data != null && pscCsv.Data.Lines != null)
             {
                 //Set CSvHeader items from the first line - Add errors
                 if (pscCsv.HasHeader)
                 {
-                    pscCsv.Headers.RawHeaderLine = pscCsv.Data.Lines.First().Line ?? "";
+                    pscCsv.Headers.CsvHeaderLine = pscCsv.Data.Lines.First().Line ?? "";
                     //run method/s to calcualte header properties from T
                 }
                 else { /*TODO: ? */}
@@ -83,7 +83,7 @@ namespace Csv.Parse
                     {
                         //Anti-pattern warning - footer needs an interface, be extensible for future requirements
                         var lastLine = pscCsv.Data.Lines.Last().Line;                                           
-                        var footerElements = csvlineSplitter.CsvSplit(
+                        var footerElements = CsvLineplitter.CsvSplit(
                             lastLine, pscCsv.IsQuoted, true, pscCsv.Separator, pscCsv.Quote);
                         //Run footer get and set   
                     }
@@ -98,5 +98,6 @@ namespace Csv.Parse
 
             return pscCsv;
         }
+        
     }
 }
