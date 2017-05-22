@@ -8,17 +8,111 @@ namespace Csv.Common
 {
     public class CsvLineSplitter : ICsvLineSplitter
     {
-        /// <summary>
-        /// Returns list of string. Splits the source string using provided seprator. Defaults to empty string list.
-        /// Optionally removes provided quotes and trim each split item. By default trims each result Collection Item.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="stripQuotes"></param>
-        /// <param name="trimSource"></param>
-        /// <param name="separator"></param>
-        /// <param name="quote"></param>
-        /// <returns>List<string></returns>
-        public List<string> CsvSplit(string source, bool stripQuotes, bool trimItems, char separator, char quote)
+
+        public List<string> AltCsvLineSplit(string source, bool stripQuotes, bool trimItems, char separator, char quote)
+        {
+            string emptyItemPattern = "\"\"";
+            
+
+            if ((int)separator == 0)
+            {
+                separator = ',';
+            }
+            if ((int)quote == 0)
+            {
+                quote = '"';
+            }
+            else
+            {
+                emptyItemPattern = quote.ToString() + quote.ToString();
+            }
+
+            if (string.IsNullOrEmpty(source) || source.Length < 3) { return new List<string>(); }
+            
+            var rawArray = source.Split(separator);
+
+            if (rawArray == null || rawArray.Length <= 0)
+            {
+                return new List<string>();
+            }
+
+            List<string> stringList = new List<string>();
+
+            foreach (var input in rawArray)
+            {
+                int startIndex = -1;
+                int num = -1;
+
+                for (int length = 0; length < input.Length; ++length)
+                {
+
+                    if ((int)input[length] == (int)separator && num == -1)
+                    {
+                        if (startIndex == -1)
+                        {
+                            stringList.Add((trimItems) ?
+                                    input.Substring(0, length).Trim() :
+                                    input.Substring(0, length)
+                                );
+                            startIndex = length + 1;
+                        }
+                        else
+                        {
+                            if (stripQuotes)
+                            {
+                                string str2 = input.Substring(startIndex, length - startIndex);
+                                if (str2 == emptyItemPattern)
+                                {
+                                    stringList.Add("");
+                                }
+                                else
+                                {
+                                    if (str2.Length > 2 && (int)str2[0] == (int)quote)
+                                    {
+                                        string str3 = str2;
+                                        int index = str3.Length - 1;
+                                        if ((int)str3[index] == (int)quote)
+                                            str2 = str2.Substring(1, str2.Length - 2);
+                                    }
+                                    if (trimItems)
+                                        str2 = str2.Trim();
+                                    stringList.Add(str2);
+                                }
+                            }
+                            else if (trimItems)
+                                stringList.Add(input.Substring(startIndex, length - startIndex).Trim());
+                            else
+                                stringList.Add(input.Substring(startIndex, length - startIndex));
+                            startIndex = length + 1;
+                        }
+                    }
+                    if ((int)input[length] == (int)quote)
+                    {
+                        if (num == -1)
+                        {
+                            num = length;
+                            if (startIndex == -1)
+                                startIndex = length;
+                        }
+                        else
+                            num = -1;
+                    }
+                }                
+            }
+
+            return rawArray.ToList();
+        }
+            /// <summary>
+            /// Returns list of string. Splits the source string using provided seprator. Defaults to empty string list.
+            /// Optionally removes provided quotes and trim each split item. By default trims each result Collection Item.
+            /// </summary>
+            /// <param name="source"></param>
+            /// <param name="stripQuotes"></param>
+            /// <param name="trimSource"></param>
+            /// <param name="separator"></param>
+            /// <param name="quote"></param>
+            /// <returns>List<string></returns>
+            public List<string> CsvSplit(string source, bool stripQuotes, bool trimItems, char separator, char quote)
         {
             List<string> stringList = new List<string>();
             string str1 = "\"\"";
